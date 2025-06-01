@@ -91,6 +91,20 @@ const defaultQuestions: DefaultQuestion[] = [
     required: true,
     enabled: true,
   },
+  {
+    id: 'introduction',
+    label: 'แนะนำตัวเอง',
+    type: 'text',
+    required: true,
+    enabled: true,
+  },
+  {
+    id: 'activities',
+    label: 'กิจกรรมที่เคยทำ',
+    type: 'text',
+    required: true,
+    enabled: true,
+  },
 ];
 
 export default function QuestionsPage() {
