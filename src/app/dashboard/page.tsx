@@ -5,8 +5,30 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function DashboardPage() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newCamp, setNewCamp] = useState({
+    title: '',
+    description: '',
+    startDate: '',
+    endDate: '',
+    coverImage: '',
+  });
+
   const camps = [
     {
       id: 1,
@@ -28,8 +50,21 @@ export default function DashboardPage() {
     },
   ];
 
+  const handleCreateCamp = () => {
+    // TODO: Implement camp creation logic
+    console.log('Creating new camp:', newCamp);
+    setIsDialogOpen(false);
+    setNewCamp({
+      title: '',
+      description: '',
+      startDate: '',
+      endDate: '',
+      coverImage: '',
+    });
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">จัดการค่าย</h1>
@@ -37,10 +72,85 @@ export default function DashboardPage() {
             จัดการค่ายและผู้สมัคร
           </p>
         </div>
-        <Button>
-          <PlusIcon className="h-4 w-4 mr-2" />
-          สร้างค่ายใหม่
-        </Button>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <PlusIcon className="h-4 w-4 mr-2" />
+              สร้างค่ายใหม่
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>สร้างค่ายใหม่</DialogTitle>
+              <DialogDescription>
+                กรอกข้อมูลค่ายที่ต้องการสร้าง
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="title">ชื่อค่าย</Label>
+                <Input
+                  id="title"
+                  value={newCamp.title}
+                  onChange={(e) => setNewCamp({ ...newCamp, title: e.target.value })}
+                  placeholder="กรอกชื่อค่าย"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="description">รายละเอียดค่าย</Label>
+                <Textarea
+                  id="description"
+                  value={newCamp.description}
+                  onChange={(e) => setNewCamp({ ...newCamp, description: e.target.value })}
+                  placeholder="กรอกรายละเอียดค่าย"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="startDate">วันที่เริ่มต้น</Label>
+                  <Input
+                    id="startDate"
+                    type="date"
+                    value={newCamp.startDate}
+                    onChange={(e) => setNewCamp({ ...newCamp, startDate: e.target.value })}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="endDate">วันที่สิ้นสุด</Label>
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={newCamp.endDate}
+                    onChange={(e) => setNewCamp({ ...newCamp, endDate: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="coverImage">รูปภาพปก</Label>
+                <Input
+                  id="coverImage"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      // TODO: Implement file upload logic
+                      console.log('File selected:', file);
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                ยกเลิก
+              </Button>
+              <Button onClick={handleCreateCamp}>
+                สร้างค่าย
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
