@@ -11,8 +11,14 @@ import {
   CalendarIcon
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+      import { AreaChart, Title, Text } from "@tremor/react";
 
-export default function DashboardPage() {
+interface RegistrationData {
+  date: string;
+  registrations: number;
+}
+
+export default function CampDetailPage({ params }: { params: { id: string } }) {
   // Mock data - replace with real data from your backend
   const stats = {
     totalApplicants: 150,
@@ -21,6 +27,21 @@ export default function DashboardPage() {
     rejectedApplications: 25,
     totalQuestions: 8,
     daysUntilCamp: 30,
+  };
+
+  // Mock data for registration timeline
+  const registrationData: RegistrationData[] = [
+    { date: '2024-03-01', registrations: 5 },
+    { date: '2024-03-02', registrations: 8 },
+    { date: '2024-03-03', registrations: 12 },
+    { date: '2024-03-04', registrations: 15 },
+    { date: '2024-03-05', registrations: 20 },
+    { date: '2024-03-06', registrations: 25 },
+    { date: '2024-03-07', registrations: 30 },
+  ];
+
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('th-TH');
   };
 
   return (
@@ -83,6 +104,56 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Registration Timeline Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle>จำนวนผู้สมัครตามเวลา</CardTitle>
+          <CardDescription>
+            กราฟแสดงจำนวนผู้สมัครที่เพิ่มขึ้นตามเวลา
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[300px]">
+            <AreaChart
+              className="mt-4 h-72"
+              data={registrationData}
+              index="date"
+              categories={["registrations"]}
+              colors={["blue"]}
+              valueFormatter={(value) => `${value} คน`}
+              showLegend={false}
+              showGridLines={true}
+              showAnimation={true}
+              customTooltip={({ payload, active }) => {
+                if (!active || !payload) return null;
+                return (
+                  <div className="rounded-lg border bg-background p-2 shadow-sm">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="flex flex-col">
+                        <span className="text-[0.70rem] uppercase text-muted-foreground">
+                          วันที่
+                        </span>
+                        <span className="font-bold text-muted-foreground">
+                          {formatDate(payload[0].payload.date)}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[0.70rem] uppercase text-muted-foreground">
+                          จำนวนผู้สมัคร
+                        </span>
+                        <span className="font-bold">
+                          {payload[0].value} คน
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }}
+            />
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Quick Actions */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -14,11 +14,11 @@ import {
 } from '@heroicons/react/24/outline';
 
 const navigation = [
-  { name: 'จัดการค่าย', href: '/dashboard', icon: HomeIcon },
-  { name: 'คัดน้องค่าย', href: '/dashboard/camp-selection', icon: UserGroupIcon },
-  { name: 'รายการสมัคร', href: '/dashboard/applications', icon: ClipboardDocumentListIcon },
-  { name: 'คำถามค่าย', href: '/dashboard/questions', icon: QuestionMarkCircleIcon },
-  { name: 'ตั้งค่า', href: '/dashboard/settings', icon: Cog6ToothIcon },
+  { name: 'จัดการค่าย', href: './', icon: HomeIcon },
+  { name: 'คัดน้องค่าย', href: './camp-selection', icon: UserGroupIcon },
+  { name: 'รายการสมัคร', href: './applications', icon: ClipboardDocumentListIcon },
+  { name: 'คำถามค่าย', href: './questions', icon: QuestionMarkCircleIcon },
+  { name: 'ตั้งค่า', href: './settings', icon: Cog6ToothIcon },
 ];
 
 export default function DashboardLayout({
