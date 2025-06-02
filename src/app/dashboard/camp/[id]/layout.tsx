@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -13,21 +13,25 @@ import {
   QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline';
 
-const navigation = [
-  { name: 'จัดการค่าย', href: './', icon: HomeIcon },
-  { name: 'คัดน้องค่าย', href: './camp-selection', icon: UserGroupIcon },
-  { name: 'รายการสมัคร', href: './applications', icon: ClipboardDocumentListIcon },
-  { name: 'คำถามค่าย', href: './questions', icon: QuestionMarkCircleIcon },
-  { name: 'ตั้งค่า', href: './settings', icon: Cog6ToothIcon },
-];
 
 export default function DashboardLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ id: string }>;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const { id } = use(params);
+  const [navigation , setNavigation] = useState([
+    { name: 'จัดการค่าย', href: `./camp`, icon: HomeIcon },
+    { name: 'คัดน้องค่าย', href: `./camp-selection`, icon: UserGroupIcon },
+    { name: 'รายการสมัคร', href: `./applications`, icon: ClipboardDocumentListIcon },
+    { name: 'คำถามค่าย', href: `./questions`, icon: QuestionMarkCircleIcon },
+    { name: 'ตั้งค่า', href: `./settings`, icon: Cog6ToothIcon },
+  ]);
+
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -42,7 +46,7 @@ export default function DashboardLayout({
               {navigation.map((item) => {
                 const isActive = pathname === item.href;
                 return (
-                  <Link
+                  <a
                     key={item.name}
                     href={item.href}
                     className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
@@ -58,7 +62,7 @@ export default function DashboardLayout({
                       aria-hidden="true"
                     />
                     {item.name}
-                  </Link>
+                  </a>
                 );
               })}
             </nav>
@@ -134,6 +138,7 @@ export default function DashboardLayout({
       <div className="flex flex-1 flex-col md:pl-64">
         <main className="flex-1">
           <div className="py-6">
+            {id}
             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
               {children}
             </div>
