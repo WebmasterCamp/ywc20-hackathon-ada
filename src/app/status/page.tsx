@@ -14,14 +14,16 @@ interface CampRegistration {
   question1: string
   question2: string
   question3: string
-  status: 'pending' | 'approve' | 'decline'
+  status: null
   comment: string
+  submitted_at: string
 }
 
 export default function Status() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [registration, setRegistration] = useState<CampRegistration | null>(null)
+  const [expandedId, setExpandedId] = useState<string | null>(null)
 
   useEffect(() => {
     checkUserAndFetchRegistration()
@@ -62,8 +64,13 @@ export default function Status() {
     }
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
+  const getStatusDisplay = (status: string | null) => {
+    if (!status) return 'Pending'
+    return status.charAt(0).toUpperCase() + status.slice(1)
+  }
+
+  const getStatusColor = (status: string | null) => {
+    switch (status?.toLowerCase()) {
       case 'approve':
         return 'bg-green-100 text-green-800'
       case 'decline':
@@ -102,63 +109,64 @@ export default function Status() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="px-6 py-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Your Registration Status</h2>
-            
-            <div className="space-y-6">
-              {/* Status Badge */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-1">Status</h3>
-                <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${getStatusColor(registration.status)}`}>
-                  {registration.status.charAt(0).toUpperCase() + registration.status.slice(1)}
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Camp Applications</h1>
+        
+        <div className="space-y-6">
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    {registration.first_name} {registration.last_name}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    Submitted on {new Date(registration.submitted_at).toLocaleDateString()}
+                  </p>
+                </div>
+                <span className={`px-3 py-1 text-sm font-semibold rounded-full ${getStatusColor(registration.status)}`}>
+                  {getStatusDisplay(registration.status)}
                 </span>
               </div>
 
-              {/* Personal Information */}
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Full Name</h3>
-                  <p className="text-lg text-gray-900">{registration.first_name} {registration.last_name}</p>
+                  <p className="text-sm text-gray-500">Nickname</p>
+                  <p className="text-gray-900">{registration.nickname || '-'}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Nickname</h3>
-                  <p className="text-lg text-gray-900">{registration.nickname}</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Gender</h3>
-                  <p className="text-lg text-gray-900">{registration.gender}</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Birth Date</h3>
-                  <p className="text-lg text-gray-900">{new Date(registration.birth_date).toLocaleDateString()}</p>
+                  <p className="text-sm text-gray-500">Gender</p>
+                  <p className="text-gray-900">{registration.gender || '-'}</p>
                 </div>
               </div>
 
-              {/* Questions and Answers */}
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Question 1</h3>
-                  <p className="text-gray-900">{registration.question1}</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Question 2</h3>
-                  <p className="text-gray-900">{registration.question2}</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Question 3</h3>
-                  <p className="text-gray-900">{registration.question3}</p>
-                </div>
-              </div>
+              <button
+                onClick={() => setExpandedId(expandedId === registration.id ? null : registration.id)}
+                className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+              >
+                {expandedId === registration.id ? 'Show Less' : 'Show More'}
+              </button>
 
-              {/* Comments */}
-              {registration.comment && (
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Comments from Staff</h3>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-gray-900">{registration.comment}</p>
+              {expandedId === registration.id && (
+                <div className="mt-4 space-y-4 border-t pt-4">
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-1">Question 1</h3>
+                    <p className="text-gray-900">{registration.question1 || '-'}</p>
                   </div>
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-1">Question 2</h3>
+                    <p className="text-gray-900">{registration.question2 || '-'}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-1">Question 3</h3>
+                    <p className="text-gray-900">{registration.question3 || '-'}</p>
+                  </div>
+                  {registration.comment && (
+                    <div className="bg-gray-50 rounded-lg p-4 mt-4">
+                      <h3 className="text-sm font-medium text-gray-500 mb-1">Staff Comment</h3>
+                      <p className="text-gray-900">{registration.comment}</p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

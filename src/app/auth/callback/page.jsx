@@ -10,8 +10,37 @@ export default function AuthCallbackPage() {
     const handleCallback = async () => {
       try {
         await supabase.auth.getSession();
+        const fetchProfile = async () => {
+          const {
+            data: { user },
+            error: authError,
+          } = await supabase.auth.getUser();
+    
+          if (authError || !user) {
+            console.error("Auth error:", authError);
+            router.push("/login");
+            return;
+          }
+    
+    
+    
+          const { data, error } = await supabase
+            .from("campers")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+    
+          if (!error) {
+            router.push("/"); // ไปที่หน้า Setup Profile ถ้าไม่มีโปรไฟล์
+            return;
+          }
+    
+     
+        };
+    
+        fetchProfile();
         // After session is established, redirect to dashboard
-        router.push("/");
+        router.push("/setup-profile");
       } catch (error) {
         console.error("Error in auth callback:", error);
         router.push("/login?error=Authentication failed");
