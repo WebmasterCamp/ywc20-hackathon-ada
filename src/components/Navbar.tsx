@@ -53,7 +53,9 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-gray-900">CampSite</span>
+              <span className="text-xl font-bold text-gray-900">
+                <img src="/DekCamp.svg" alt="DekCamp" className="h-15 w-15" />
+              </span>
             </Link>
           </div>
 
