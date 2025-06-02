@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CampSite by ADA",
+  title: "CampKids by ADA",
   description: "YWC20 Web Never Die",
 };
 
