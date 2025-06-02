@@ -54,7 +54,7 @@ export default function Navbar() {
           <div className="flex">
             <Link href="/" className="flex items-center">
               <span className="text-xl font-bold text-gray-900">
-                <img src="/DekCamp.svg" alt="DekCamp" className="h-15 w-15" />
+                <img src="https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//DekCamp.svg" alt="DekCamp" className="h-15 w-15" />
               </span>
             </Link>
           </div>
