@@ -223,7 +223,7 @@ export default function SetupProfile() {
             <div>
               <label className="block text-sm font-medium text-gray-700">อีเมล</label>
               <input
-                type="email"
+                type="text"
                 name="email"
                 required
                 value={formData.email}

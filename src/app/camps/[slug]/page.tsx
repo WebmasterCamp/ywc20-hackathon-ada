@@ -73,6 +73,28 @@ function useCountdown(targetDate: Date) {
     return timeLeft;
 }
 
+// Add Punycode decoder function
+function decodePunycodeEmail(email: string): string {
+  try {
+    // Split email into local part and domain
+    const [localPart, domain] = email.split('@');
+    if (!domain) return email;
+
+    // Decode domain part
+    const decodedDomain = domain.split('.').map(part => {
+      if (part.startsWith('xn--')) {
+        return decodeURIComponent(part.replace(/^xn--/, ''));
+      }
+      return part;
+    }).join('.');
+
+    return `${localPart}@${decodedDomain}`;
+  } catch (error) {
+    console.error('Error decoding email:', error);
+    return email;
+  }
+}
+
 export default function CampPage({ params }: { params: Promise<{ slug: string }> }) {
     const targetDate = new Date('2025-06-3');
     const { days, hours, minutes, seconds } = useCountdown(targetDate);
@@ -123,6 +145,9 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                 }
 
                 if (profileData) {
+                    // Decode email if it exists
+                    const decodedEmail = profileData.email ? decodePunycodeEmail(profileData.email) : '';
+                    
                     // Pre-fill form with user data
                     form.reset({
                         first_name: profileData.first_name || "",
@@ -130,7 +155,7 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                         nickname: profileData.nickname || "",
                         gender: profileData.gender || "",
                         birth_date: profileData.birth_date || "",
-                        email: profileData.email || "",
+                        email: decodedEmail,
                         question1: "",
                         question2: "",
                         question3: "",
@@ -173,6 +198,19 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
 
         fetchUserData();
     }, [form, campSlug]);
+
+    // Add new useEffect to watch form changes
+    useEffect(() => {
+        const subscription = form.watch((value, { name }) => {
+            if (name === 'email' && value.email) {
+                const decodedEmail = decodePunycodeEmail(value.email);
+                if (decodedEmail !== value.email) {
+                    form.setValue('email', decodedEmail, { shouldValidate: true });
+                }
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [form]);
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsSubmitting(true);

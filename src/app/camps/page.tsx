@@ -23,7 +23,7 @@ const mockCamps: Camp[] = [
     id: 1,
     title: "ค่าย YWC 20",
     description: "ค่ายพัฒนาเว็บไซต์สำหรับเยาวชนรุ่นใหม่",
-    coverImage: "/camp-cover-1.jpg",
+    coverImage: "https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png",
     status: "active",
     startDate: "2024-07-01",
     endDate: "2024-07-07"
@@ -32,7 +32,7 @@ const mockCamps: Camp[] = [
     id: 2,
     title: "ค่าย YWC 21",
     description: "ค่ายพัฒนาเว็บไซต์สำหรับเยาวชนรุ่นใหม่",
-    coverImage: "/camp-cover-2.jpg",
+    coverImage: "https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png",
     status: "upcoming",
     startDate: "2024-12-01",
     endDate: "2024-12-07"
@@ -41,7 +41,7 @@ const mockCamps: Camp[] = [
     id: 1748838334437,
     title: "ค่าย YWC ใหม่",
     description: "ค่ายพัฒนาเว็บไซต์สำหรับเยาวชนรุ่นใหม่",
-    coverImage: "/camp-cover-1.jpg",
+    coverImage: "https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png",
     status: "upcoming",
     startDate: "2025-06-02",
     endDate: "2025-06-09"
@@ -50,7 +50,7 @@ const mockCamps: Camp[] = [
     id: 1748838683269,
     title: "ค่าย YWC ใหม่",
     description: "ค่ายพัฒนาเว็บไซต์สำหรับเยาวชนรุ่นใหม่",
-    coverImage: "/camp-cover-1.jpg",
+    coverImage: "https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png",
     status: "upcoming",
     startDate: "2025-06-02",
     endDate: "2025-06-09"
