@@ -32,17 +32,21 @@ export const updateSession = async (request: NextRequest) => {
         },
       }
     );
+    
+    
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
     const user = await supabase.auth.getUser();
 
+    
     // Define public paths that don't require authentication
     const publicPaths = [
       "/login",
       "/setup-profile",
       "/auth",
       "/auth/callback",
+      "/",
     ];
 
     const isPublicPath = publicPaths.some(
@@ -51,28 +55,26 @@ export const updateSession = async (request: NextRequest) => {
         request.nextUrl.pathname.startsWith(path + "/")
     );
   
-
+   
     // Redirect to login if user has error and not on a public path
     if (
       !user.data.user &&
-      !isPublicPath &&
-      request.nextUrl.pathname !== "/" &&
-      request.nextUrl.pathname !== "/walls" &&
-      request.nextUrl.pathname !== "/message"
+      !isPublicPath 
+      
     ) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
     // Additional logic for protected paths
-    if (
-      !isPublicPath &&
-      request.nextUrl.pathname !== "/" &&
-      !request.nextUrl.pathname.startsWith("/walls") &&
-      request.nextUrl.pathname !== "/profile" &&
-      !request.nextUrl.pathname.startsWith("/message")
-    ) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+    // if (
+    //   !isPublicPath &&
+    //   request.nextUrl.pathname !== "/" &&
+    //   !request.nextUrl.pathname.startsWith("/walls") &&
+    //   request.nextUrl.pathname !== "/profile" &&
+    //   !request.nextUrl.pathname.startsWith("/message")
+    // ) {
+    //   return NextResponse.redirect(new URL("/", request.url));
+    // }
 
     return response;
   } catch {
