@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { RiPaletteLine, RiMicLine, RiGalleryLine } from "react-icons/ri";
 import {
     Select,
     SelectContent,
@@ -263,7 +264,7 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
     }
 
     return (
-        <div className="bg-[rgb(255, 250, 241)]">
+        <div className="bg-[rgb(255, 250, 241)] flex flex-col items-center justify-center">
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-center space-x-4">
@@ -290,9 +291,9 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                 </div>
             </div>
   
-            <img className="h-76 object-cover w-full" src="https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png" />
+            <img className="h-92 object-cover w-full" src="https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png" />
         
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-32 text-center">
                 <div className="mb-6">
                     <h1 className="text-4xl font-bold mb-6">
                        Creative Camp คืออะไร?
@@ -303,6 +304,141 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                     </div>
                 </div>
 
+                <div className="mb-6">
+                    <h1 className="text-4xl font-bold mb-6">
+                        ทำไมถึงควรสมัครค่ายนี้?
+                    </h1>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <div className="flex justify-center mb-4">
+                                <RiPaletteLine className="w-12 h-12 text-purple-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold mb-4">เลือกเส้นทางความสร้างสรรค์</h3>
+                            <p className="text-gray-600">
+                                ให้ทุกคนได้ค้นพบและเลือกเส้นทางความสร้างสรรค์ของตัวเอง ผ่านการทดลองและเรียนรู้ในรูปแบบที่หลากหลาย
+                            </p>
+                        </div>
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <div className="flex justify-center mb-4">
+                                <RiMicLine className="w-12 h-12 text-blue-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold mb-4">วิทยากรและ Mentor มืออาชีพ</h3>
+                            <p className="text-gray-600">
+                                เรียนรู้และรับคำแนะนำจากวิทยากรและ Mentor ผู้เชี่ยวชาญด้านศิลปะ ดนตรี และการพูด
+                            </p>
+                        </div>
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <div className="flex justify-center mb-4">
+                                <RiGalleryLine className="w-12 h-12 text-pink-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold mb-4">Mini Showcase</h3>
+                            <p className="text-gray-600">
+                                โอกาสในการแสดงผลงานจริงผ่าน Mini Showcase เพื่อแสดงศักยภาพและความคิดสร้างสรรค์
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="w-full bg-[#b14418] py-16">
+                    <div className="max-w-4xl mx-auto px-4">
+                        <h1 className="text-4xl font-bold mb-12 text-white text-center">
+                            Timeline
+                        </h1>
+                        <div className="relative">
+                            {/* Line running through timeline */}
+                            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-white/30"></div>
+                            
+                            {/* Timeline items */}
+                            <div className="space-y-16">
+                                {/* Registration Period */}
+                                <div className="relative">
+                                    <div className="flex items-center">
+                                        {/* Left content */}
+                                        <div className="w-1/2 pr-8 text-right">
+                                            <h3 className="text-xl font-semibold text-white mb-2">เปิดรับสมัคร</h3>
+                                            <p className="text-orange-200">1 พฤษภาคม - 31 พฤษภาคม 2567</p>
+                                        </div>
+                                        {/* Circle indicator */}
+                                        <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-400 rounded-full"></div>
+                                        {/* Right content */}
+                                        <div className="w-1/2 pl-8">
+                                            <p className="text-orange-200">
+                                                เปิดรับสมัครผู้เข้าร่วมค่าย<br />
+                                                รับจำนวนจำกัดเพียง 60 คนเท่านั้น
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Results Announcement */}
+                                <div className="relative">
+                                    <div className="flex items-center">
+                                        <div className="w-1/2 pr-8 text-right">
+                                            <h3 className="text-xl font-semibold text-white mb-2">ประกาศผล</h3>
+                                            <p className="text-orange-200">15 มิถุนายน 2567</p>
+                                        </div>
+                                        <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rounded-full"></div>
+                                        <div className="w-1/2 pl-8">
+                                            <p className="text-orange-200">
+                                                ประกาศรายชื่อผู้มีสิทธิ์เข้าร่วมค่าย<br />
+                                                ผ่านทางเว็บไซต์และอีเมล
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Camp Period */}
+                                <div className="relative">
+                                    <div className="flex items-center">
+                                        <div className="w-1/2 pr-8 text-right">
+                                            <h3 className="text-xl font-semibold text-white mb-2">วันค่าย</h3>
+                                            <p className="text-orange-200">1-3 กรกฎาคม 2567</p>
+                                        </div>
+                                        <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rounded-full"></div>
+                                        <div className="w-1/2 pl-8">
+                                            <p className="text-orange-200">
+                                                กิจกรรมค่าย 3 วัน 2 คืน<br />
+                                                ณ มหาวิทยาลัยเกษตรศาสตร์ บางเขน
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+   <div className="w-full py-16">
+                    <div className="max-w-4xl mx-auto px-4">
+                        <h1 className="text-4xl font-bold mb-8 text-center">
+                            สถานที่จัดค่าย
+                        </h1>
+                        <div className="mb-6 text-center text-gray-600">
+                            <p className="text-lg mb-2">มหาวิทยาลัยเกษตรศาสตร์ (วิทยาเขตบางเขน)</p>
+                            <p>50 ถนนงามวงศ์วาน แขวงลาดยาว เขตจตุจักร กรุงเทพมหานคร 10900</p>
+                        </div>
+                        <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-lg">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.8154172904274!2d100.56824731483357!3d13.846973990291392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29d2309b9f20b%3A0xd1c0b7e327d15e3a!2sKasetsart%20University!5e0!3m2!1sen!2sth!4v1647887558677!5m2!1sen!2sth" 
+                                width="100%" 
+                                height="100%" 
+                                style={{ border: 0 }} 
+                                allowFullScreen 
+                                loading="lazy" 
+                                referrerPolicy="no-referrer-when-downgrade"
+                            ></iframe>
+                        </div>
+                        <div className="mt-6 flex justify-center">
+                            <a 
+                                href="https://goo.gl/maps/QZFUEzk5WL5ZTRGWA" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="inline-flex items-center px-6 py-3 bg-[#b14418] text-white font-semibold rounded-lg hover:bg-[#943813] transition-colors"
+                            >
+                                เปิดใน Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <Card>
                     <CardHeader>
                         <CardTitle>สมัครค่าย</CardTitle>
@@ -460,11 +596,13 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                             </Form>
                         ) : (
                             <div className="text-center py-8">
-                                <p className="text-lg text-gray-600">คุณได้ลงทะเบียนค่ายนี้ไปแล้ว</p>
+                                <p className="text-lg text-gray-600"></p>
                             </div>
                         )}
                     </CardContent>
                 </Card>
+
+             
             </div>
         </div>
     )
