@@ -14,8 +14,8 @@ interface Camp {
 const camps: Camp[] = [
   {
     id: 1,
-    title: "ค่าย YWC 20",
-    description: "ค่ายพัฒนาเว็บไซต์สำหรับเยาวชนรุ่นใหม่",
+    title: "Creative Camp",
+    description: "ค่ายพัฒนาทักษะการสร้างสรรค์ผ่านศิลปะ การพูด และการสื่อสารหลากรูปแบบ",
     coverImage: "https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png",
     status: "active",
     startDate: "2024-07-01",
@@ -25,7 +25,7 @@ const camps: Camp[] = [
     id: 2,
     title: "ค่าย YWC 21",
     description: "ค่ายพัฒนาเว็บไซต์สำหรับเยาวชนรุ่นใหม่",
-    coverImage: "https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//Frame%2020%20(1).png",
+    coverImage: "https://zhrlwnjbkaaautzeysuf.supabase.co/storage/v1/object/public/camp//ywc.png",
     status: "upcoming",
     startDate: "2024-12-01",
     endDate: "2024-12-07",

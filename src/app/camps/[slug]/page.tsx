@@ -551,7 +551,7 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                                             name="question1"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>คำถามที่ 1</FormLabel>
+                                                    <FormLabel>อะไรคือแรงจูงใจหลักที่ทำให้คุณสมัครเข้าค่ายนี้?</FormLabel>
                                                     <FormControl>
                                                         <Textarea placeholder="คำตอบของคุณ" {...field} />
                                                     </FormControl>
@@ -564,7 +564,8 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                                             name="question2"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>คำถามที่ 2</FormLabel>
+                                                    <FormLabel>คุณคาดหวังจะได้อะไรจากการเข้าค่ายครั้งนี้ ทั้งในแง่ของความรู้ ประสบการณ์ หรือทักษะ?
+                                                    </FormLabel>
                                                     <FormControl>
                                                         <Textarea placeholder="คำตอบของคุณ" {...field} />
                                                     </FormControl>
@@ -577,7 +578,8 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                                             name="question3"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>คำถามที่ 3</FormLabel>
+                                                    <FormLabel>เคยมีเหตุการณ์ใดในชีวิตที่ทำให้คุณสนใจในหัวข้อ/กิจกรรมของค่ายนี้?
+                                                    </FormLabel>
                                                     <FormControl>
                                                         <Textarea placeholder="คำตอบของคุณ" {...field} />
                                                     </FormControl>
