@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { supabase } from '@/lib/supabaseClient';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -70,12 +70,14 @@ function useCountdown(targetDate: Date) {
     return timeLeft;
 }
 
-export default function CampPage({ params }: { params: { slug: string } }) {
+export default function CampPage({ params }: { params: Promise<{ slug: string }> }) {
     const targetDate = new Date('2025-06-3');
     const { days, hours, minutes, seconds } = useCountdown(targetDate);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isFormDisabled, setIsFormDisabled] = useState(false);
     const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
+    const campSlug = use(params).slug;
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -133,21 +135,24 @@ export default function CampPage({ params }: { params: { slug: string } }) {
                 // Check if user has already registered for this camp
                 const { data: existingRegistration, error: registrationError } = await supabase
                     .from('camp_registrations')
-                    .select('*')
+                    .select('id, status, submitted_at')
                     .eq('camper_id', user.id)
-                    .eq('camp_slug', params.slug)
+                    .eq('camp_slug', campSlug)
+                    .order('created_at', { ascending: false })
+                    .limit(1)
                     .single();
+
+                if (registrationError) {
+                    console.error('Error checking registration:', registrationError);
+                    return;
+                }
 
                 if (existingRegistration) {
                     setNotification({
                         type: 'error',
                         message: 'คุณได้ลงทะเบียนค่ายนี้ไปแล้ว'
                     });
-                    // Disable all form fields
-                    Object.keys(form.getValues()).forEach((key) => {
-                        form.setValue(key as any, form.getValues(key as any), { shouldValidate: false });
-                    });
-                    form.formState.isSubmitting = true;
+                    setIsFormDisabled(true);
                 }
 
             } catch (error) {
@@ -162,7 +167,7 @@ export default function CampPage({ params }: { params: { slug: string } }) {
         };
 
         fetchUserData();
-    }, [form, params.slug]);
+    }, [form, campSlug]);
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsSubmitting(true);
@@ -181,7 +186,7 @@ export default function CampPage({ params }: { params: { slug: string } }) {
                     {
                         camper_id: user.id,
                         ...values,
-                        camp_slug: params.slug,
+                        camp_slug: campSlug,
                         created_at: new Date().toISOString()
                     }
                 ]);
@@ -394,7 +399,7 @@ export default function CampPage({ params }: { params: { slug: string } }) {
                                 </div>
 
                                 <div className="flex justify-end">
-                                    <Button type="submit" disabled={isSubmitting || form.formState.isSubmitting}>
+                                    <Button type="submit" disabled={isSubmitting || isFormDisabled}>
                                         {isSubmitting ? 'กำลังส่ง...' : 'ส่งใบสมัคร'}
                                     </Button>
                                 </div>
