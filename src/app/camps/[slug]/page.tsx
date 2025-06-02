@@ -277,134 +277,140 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                             </div>
                         )}
 
-                        <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                                    <FormField
-                                        control={form.control}
-                                        name="first_name"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>ชื่อ</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="ชื่อ" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="last_name"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>นามสกุล</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="นามสกุล" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="nickname"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>ชื่อเล่น</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="ชื่อเล่น" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="gender"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>เพศ</FormLabel>
-                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        {!isFormDisabled ? (
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                        <FormField
+                                            control={form.control}
+                                            name="first_name"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>ชื่อ</FormLabel>
                                                     <FormControl>
-                                                        <SelectTrigger>
-                                                            <SelectValue placeholder="เลือกเพศ" />
-                                                        </SelectTrigger>
+                                                        <Input placeholder="ชื่อ" {...field} />
                                                     </FormControl>
-                                                    <SelectContent>
-                                                        <SelectItem value="male">ชาย</SelectItem>
-                                                        <SelectItem value="female">หญิง</SelectItem>
-                                                        <SelectItem value="other">อื่นๆ</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="birth_date"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>วันเกิด</FormLabel>
-                                                <FormControl>
-                                                    <Input type="date" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="last_name"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>นามสกุล</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="นามสกุล" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="nickname"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>ชื่อเล่น</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="ชื่อเล่น" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="gender"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>เพศ</FormLabel>
+                                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                        <FormControl>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="เลือกเพศ" />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            <SelectItem value="male">ชาย</SelectItem>
+                                                            <SelectItem value="female">หญิง</SelectItem>
+                                                            <SelectItem value="other">อื่นๆ</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="birth_date"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>วันเกิด</FormLabel>
+                                                    <FormControl>
+                                                        <Input type="date" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
 
-                                <div className="space-y-4">
-                                    <FormField
-                                        control={form.control}
-                                        name="question1"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>คำถามที่ 1</FormLabel>
-                                                <FormControl>
-                                                    <Textarea placeholder="คำตอบของคุณ" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="question2"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>คำถามที่ 2</FormLabel>
-                                                <FormControl>
-                                                    <Textarea placeholder="คำตอบของคุณ" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="question3"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>คำถามที่ 3</FormLabel>
-                                                <FormControl>
-                                                    <Textarea placeholder="คำตอบของคุณ" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
+                                    <div className="space-y-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="question1"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>คำถามที่ 1</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea placeholder="คำตอบของคุณ" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="question2"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>คำถามที่ 2</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea placeholder="คำตอบของคุณ" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="question3"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>คำถามที่ 3</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea placeholder="คำตอบของคุณ" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
 
-                                <div className="flex justify-end">
-                                    <Button type="submit" disabled={isSubmitting || isFormDisabled}>
-                                        {isSubmitting ? 'กำลังส่ง...' : 'ส่งใบสมัคร'}
-                                    </Button>
-                                </div>
-                            </form>
-                        </Form>
+                                    <div className="flex justify-end">
+                                        <Button type="submit" disabled={isSubmitting}>
+                                            {isSubmitting ? 'กำลังส่ง...' : 'ส่งใบสมัคร'}
+                                        </Button>
+                                    </div>
+                                </form>
+                            </Form>
+                        ) : (
+                            <div className="text-center py-8">
+                                <p className="text-lg text-gray-600">คุณได้ลงทะเบียนค่ายนี้ไปแล้ว</p>
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>
