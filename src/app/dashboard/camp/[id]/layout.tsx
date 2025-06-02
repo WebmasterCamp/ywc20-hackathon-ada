@@ -2,7 +2,7 @@
 
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useParams } from 'next/navigation';
 import { 
   HomeIcon, 
   UserGroupIcon, 
@@ -11,7 +11,8 @@ import {
   Cog6ToothIcon,
   EyeIcon,
   QuestionMarkCircleIcon,
-  ShareIcon
+  ShareIcon,
+  ArrowPathIcon
 } from '@heroicons/react/24/outline';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -41,6 +42,7 @@ export default function DashboardLayout({
     { name: 'รายการสมัคร', href: `./applications`, icon: ClipboardDocumentListIcon },
     { name: 'คำถามค่าย', href: `./questions`, icon: QuestionMarkCircleIcon },
     { name: 'ตั้งค่า', href: `./settings`, icon: Cog6ToothIcon },
+    { name: 'จัดเรียงคำถาม', href: `./sort-question`, icon: ArrowPathIcon },
   ]);
 
   const handleShare = async () => {
