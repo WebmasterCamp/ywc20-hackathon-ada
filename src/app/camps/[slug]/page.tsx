@@ -32,6 +32,9 @@ const formSchema = z.object({
     nickname: z.string().min(1, "กรุณากรอกชื่อเล่น"),
     gender: z.string().min(1, "กรุณาเลือกเพศ"),
     birth_date: z.string().min(1, "กรุณาเลือกวันเกิด"),
+    email: z.string().refine((email) => email.includes('@') && email.includes('.'), {
+        message: "กรุณากรอกอีเมลให้ถูกต้อง"
+    }),
     question1: z.string().min(1, "กรุณาตอบคำถาม"),
     question2: z.string().min(1, "กรุณาตอบคำถาม"),
     question3: z.string().min(1, "กรุณาตอบคำถาม"),
@@ -87,6 +90,7 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
             nickname: "",
             gender: "",
             birth_date: "",
+            email: "",
             question1: "",
             question2: "",
             question3: "",
@@ -126,6 +130,7 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                         nickname: profileData.nickname || "",
                         gender: profileData.gender || "",
                         birth_date: profileData.birth_date || "",
+                        email: profileData.email || "",
                         question1: "",
                         question2: "",
                         question3: "",
@@ -255,7 +260,7 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                        Creative Camp คืออะไร?
                     </h1>
                     <div>
-                    ค่ายที่ “เปิดพื้นที่ให้เด็กมัธยมได้ปลดปล่อยความคิดสร้างสรรค์ผ่านศิลปะ การพูด และการสื่อสารหลากรูปแบบ”
+                    ค่ายที่ "เปิดพื้นที่ให้เด็กมัธยมได้ปลดปล่อยความคิดสร้างสรรค์ผ่านศิลปะ การพูด และการสื่อสารหลากรูปแบบ"
                     Camp Create เป็นค่ายที่ออกแบบมาเพื่อให้วัยรุ่นได้พัฒนาทักษะ การแสดงออก ความมั่นใจ และความคิดสร้างสรรค์ ผ่านกิจกรรมศิลปะ ดนตรี การพูดในที่สาธารณะ และการเล่าเรื่อง
                     </div>
                 </div>
@@ -311,6 +316,19 @@ export default function CampPage({ params }: { params: Promise<{ slug: string }>
                                                     <FormLabel>ชื่อเล่น</FormLabel>
                                                     <FormControl>
                                                         <Input placeholder="ชื่อเล่น" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="email"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>อีเมล</FormLabel>
+                                                    <FormControl>
+                                                        <Input type="text" placeholder="your@email.com" {...field} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
