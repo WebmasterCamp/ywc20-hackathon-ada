@@ -14,6 +14,7 @@ interface CamperProfile {
   strengths: string
   past_activities: string
   profile_url: string
+  email: string
 }
 
 export default function SetupProfile() {
@@ -30,7 +31,8 @@ export default function SetupProfile() {
     gender: 'male',
     strengths: '',
     past_activities: '',
-    profile_url: ''
+    profile_url: '',
+    email: ''
   })
 
   useEffect(() => {
@@ -199,6 +201,17 @@ export default function SetupProfile() {
                 name="nickname"
                 required
                 value={formData.nickname}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md bg-white/10 border border-white/20 text-white px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-white">Email</label>
+              <input
+                type="email"
+                name="email"
+                required
+                value={formData.email}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md bg-white/10 border border-white/20 text-white px-3 py-2"
               />

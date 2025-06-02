@@ -47,6 +47,8 @@ export const updateSession = async (request: NextRequest) => {
       "/auth",
       "/auth/callback",
       "/",
+      "/camps/:slug",
+      "/camps",
     ];
 
     const isPublicPath = publicPaths.some(
