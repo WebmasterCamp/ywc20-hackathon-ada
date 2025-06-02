@@ -18,7 +18,7 @@ interface RegistrationData {
   registrations: number;
 }
 
-export default function CampDetailPage({ params }: { params: { id: string } }) {
+export default function CampDetailPage() {
   // Mock data - replace with real data from your backend
   const stats = {
     totalApplicants: 150,
