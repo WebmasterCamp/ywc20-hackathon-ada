@@ -10,9 +10,19 @@ import {
   ChartBarIcon,
   Cog6ToothIcon,
   EyeIcon,
-  QuestionMarkCircleIcon
+  QuestionMarkCircleIcon,
+  ShareIcon
 } from '@heroicons/react/24/outline';
-
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function DashboardLayout({
   children,
@@ -22,9 +32,10 @@ export default function DashboardLayout({
   params: Promise<{ id: string }>;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const pathname = usePathname();
   const { id } = use(params);
-  const [navigation , setNavigation] = useState([
+  const [navigation, setNavigation] = useState([
     { name: 'จัดการค่าย', href: `./camp`, icon: HomeIcon },
     { name: 'คัดน้องค่าย', href: `./camp-selection`, icon: UserGroupIcon },
     { name: 'รายการสมัคร', href: `./applications`, icon: ClipboardDocumentListIcon },
@@ -32,6 +43,16 @@ export default function DashboardLayout({
     { name: 'ตั้งค่า', href: `./settings`, icon: Cog6ToothIcon },
   ]);
 
+  const handleShare = async () => {
+    const shareUrl = `${window.location.origin}/camps/${id}`;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      alert('คัดลอกลิงก์แล้ว!');
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+      alert('ไม่สามารถคัดลอกลิงก์ได้');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -65,6 +86,41 @@ export default function DashboardLayout({
                   </a>
                 );
               })}
+              <Separator className="my-4" />
+              <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
+                <DialogTrigger asChild>
+                  <button
+                    className="group flex w-full items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  >
+                    <ShareIcon
+                      className="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
+                    แชร์ลิงก์สมัคร
+                  </button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>แชร์ลิงก์สมัครค่าย</DialogTitle>
+                    <DialogDescription>
+                      คัดลอกลิงก์ด้านล่างเพื่อแชร์ให้ผู้ที่สนใจสมัครค่าย
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="mt-4">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        readOnly
+                        value={`${window.location.origin}/camps/${id}`}
+                        className="flex-1 px-3 py-2 border rounded-md text-sm"
+                      />
+                      <Button onClick={handleShare}>
+                        คัดลอก
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </nav>
           </div>
         </div>
@@ -128,6 +184,42 @@ export default function DashboardLayout({
                     </Link>
                   );
                 })}
+                <Separator className="my-4" />
+                <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
+                  <DialogTrigger asChild>
+                    <button
+                      className="group flex w-full items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      onClick={() => setSidebarOpen(false)}
+                    >
+                      <ShareIcon
+                        className="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                      แชร์ลิงก์สมัคร
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>แชร์ลิงก์สมัครค่าย</DialogTitle>
+                      <DialogDescription>
+                        คัดลอกลิงก์ด้านล่างเพื่อแชร์ให้ผู้ที่สนใจสมัครค่าย
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="mt-4">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          readOnly
+                          value={`${window.location.origin}/camps/${id}`}
+                          className="flex-1 px-3 py-2 border rounded-md text-sm"
+                        />
+                        <Button onClick={handleShare}>
+                          คัดลอก
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </nav>
             </div>
           </div>
@@ -138,7 +230,6 @@ export default function DashboardLayout({
       <div className="flex flex-1 flex-col md:pl-64">
         <main className="flex-1">
           <div className="py-6">
-            {id}
             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
               {children}
             </div>
