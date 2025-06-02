@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import { AcademicCapIcon, CommandLineIcon } from "@heroicons/react/24/outline";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -28,8 +29,6 @@ export default function LoginPage() {
             return;
           }
     
-    
-    
           const { data, error } = await supabase
             .from("campers")
             .select("*")
@@ -37,17 +36,12 @@ export default function LoginPage() {
             .single();
     
           if (error) {
-            router.push("/setup-profile"); // ไปที่หน้า Setup Profile ถ้าไม่มีโปรไฟล์
+            router.push("/setup-profile");
             return;
           }
-    
-     
         };
     
         fetchProfile();
-        // if (currentSession) {
-        //   router.push('/');
-        // }
       } catch (error) {
         console.error("Session check error:", error);
       }
@@ -57,10 +51,6 @@ export default function LoginPage() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, currentSession) => {
       setSession(currentSession);
-      
-      // if (event === 'SIGNED_IN') {
-      //   router.push('/dashboard');
-      // }
     });
 
     return () => {
@@ -112,18 +102,29 @@ export default function LoginPage() {
   };
 
   const LoadingSpinner = () => (
-    <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
+    <div className="animate-spin h-5 w-5 border-2 border-gray-600 border-t-transparent rounded-full" />
   );
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-400 to-blue-500">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20">
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold text-white">
-            {session ? `Welcome Back, ${session.user.email}` : "Sign In"}
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="w-full max-w-md p-8 space-y-8">
+        <div className="text-center space-y-4">
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur opacity-20"></div>
+              <div className="relative bg-white p-4 rounded-full">
+                <div className="flex items-center justify-center w-20 h-20">
+                  <AcademicCapIcon className="w-12 h-12 text-blue-600" />
+                  <CommandLineIcon className="w-8 h-8 text-purple-600 -ml-4 -mt-4" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900">
+            {session ? `Welcome Back, ${session.user.email}` : "เข้าสู่ระบบ"}
           </h1>
-          <p className="text-white/80">
-            {session ? "You are logged in" : "Sign in to continue to the platform"}
+          <p className="text-gray-600">
+            {session ? "คุณได้เข้าสู่ระบบแล้ว" : "เข้าสู่ระบบเพื่อใช้งานแพลตฟอร์ม"}
           </p>
         </div>
 
@@ -131,27 +132,27 @@ export default function LoginPage() {
           <button
             onClick={handleLogout}
             disabled={isLoading}
-            className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-70"
+            className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-3 transition-all duration-200 shadow-sm hover:shadow disabled:opacity-70"
           >
             {isLoading ? (
               <div className="flex items-center space-x-3">
                 <LoadingSpinner />
-                <span>Signing out...</span>
+                <span>กำลังออกจากระบบ...</span>
               </div>
             ) : (
-              <span>Sign Out</span>
+              <span>ออกจากระบบ</span>
             )}
           </button>
         ) : (
           <button
             onClick={handleGoogleLogin}
             disabled={isLoading}
-            className="w-full bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-70"
+            className="w-full bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-3 transition-all duration-200 shadow-sm hover:shadow border border-gray-200 disabled:opacity-70"
           >
             {isLoading ? (
               <div className="flex items-center space-x-3">
                 <LoadingSpinner />
-                <span>Signing in...</span>
+                <span>กำลังเข้าสู่ระบบ...</span>
               </div>
             ) : (
               <>
@@ -173,20 +174,20 @@ export default function LoginPage() {
                     fill="#EA4335"
                   />
                 </svg>
-                <span>Continue with Google</span>
+                <span>เข้าสู่ระบบด้วย Google</span>
               </>
             )}
           </button>
         )}
 
         {loginError && (
-          <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-xl">
-            <p className="text-white text-center text-sm">{loginError}</p>
+          <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p className="text-red-600 text-center text-sm">{loginError}</p>
           </div>
         )}
 
-        <div className="pt-4 text-center text-white/60 text-sm">
-          {session ? `Logged in as ${session.user.email}` : "By continuing, you agree to our Terms of Service and Privacy Policy"}
+        <div className="pt-4 text-center text-gray-500 text-sm">
+          {session ? `เข้าสู่ระบบด้วย ${session.user.email}` : "การเข้าสู่ระบบถือว่าคุณยอมรับเงื่อนไขการใช้งานและนโยบายความเป็นส่วนตัว"}
         </div>
       </div>
     </div>
