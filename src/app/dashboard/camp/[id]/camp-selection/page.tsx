@@ -36,7 +36,7 @@ export default function CampSelection() {
   const fetchApplications = async () => {
     try {
       const { data, error } = await supabase
-        .from('camp1_applications')
+        .from('camp_registrations')
         .select('*')
         .order('submitted_at', { ascending: false })
 
@@ -53,7 +53,7 @@ export default function CampSelection() {
   const updateStatus = async (id: string, status: 'pending' | 'approve' | 'decline') => {
     try {
       const { error } = await supabase
-        .from('camp1_applications')
+        .from('camp_registrations')
         .update({ status })
         .eq('id', id)
 
@@ -68,7 +68,7 @@ export default function CampSelection() {
   const updateComment = async (id: string) => {
     try {
       const { error } = await supabase
-        .from('camp1_applications')
+        .from('camp_registrations')
         .update({ comment: editComment })
         .eq('id', id)
 
@@ -85,7 +85,7 @@ export default function CampSelection() {
   const updateCertificateUrl = async (id: string, url: string) => {
     try {
       const { error } = await supabase
-        .from('camp1_applications')
+        .from('camp_registrations')
         .update({ certificate_url: url })
         .eq('id', id)
 
@@ -100,7 +100,7 @@ export default function CampSelection() {
   const toggleBulkCertificate = async () => {
     try {
       const { error } = await supabase
-        .from('camp1_applications')
+        .from('camp_registrations')
         .update({ 
           certificate: !bulkCertificate,
           submitted_at: new Date().toISOString()
@@ -150,7 +150,7 @@ export default function CampSelection() {
 
       // Update all applications with the new template URL
       const { error: updateError } = await supabase
-        .from('camp1_applications')
+        .from('camp_registrations')
         .update({ 
           certificate_url: publicUrl,
           submitted_at: new Date().toISOString()
@@ -348,7 +348,7 @@ export default function CampSelection() {
                           onChange={async () => {
                             try {
                               const { error } = await supabase
-                                .from('camp1_applications')
+                                .from('camp_registrations')
                                 .update({ certificate: !app.certificate })
                                 .eq('id', app.id)
                               if (error) throw error
